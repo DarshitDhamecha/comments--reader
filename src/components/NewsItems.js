@@ -16,7 +16,7 @@ export class NewsItems extends Component {
                         <hr className='my-2' />
                         <p className="card-text">{email}</p>
                         <hr className='my-2' />
-                        <p className="card-text">{body}</p>
+                        <p className="card-text">{body}.....</p>
                         {/* <a href={commentId} target='_blank' className="btn btn-primary mt-2">Read More</a> */}
                     </div>
                 </div>

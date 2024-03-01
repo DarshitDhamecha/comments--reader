@@ -78,28 +78,64 @@ export class News extends Component {
 
     constructor() {
         super();
-        console.log("hello I Am A constuctur");
         this.state = {
             comments: this.comments,
-            loading: false
+            loading: false,
+            currentPage: 1,
+            commentsPerPage: 10,
         }
     }
 
+    async componentDidMount() {
+        try {
+            let Url = "https://jsonplaceholder.typicode.com/comments";
+            let data = await fetch(Url);
+            let parsedData = await data.json();
+            this.setState({ comments: parsedData });
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    }
 
+    handleClick = (e) => {
+        this.setState({
+            currentPage: Number(e.target.id)
+        })
+    }
 
     render() {
+
+        const { comments, currentPage, commentsPerPage } = this.state;
+
+        const indexOfLastComment = currentPage * commentsPerPage;
+        const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+        const currentComment = comments.slice(indexOfFirstComment, indexOfLastComment);
+
+        const pageNumbers = [];
+        let i = 1;
+        for (i; i <= Math.ceil(comments.length / commentsPerPage); i++) {
+            pageNumbers.push(i);
+        };
+
+
         return (
             <div className='m-3'>
                 <h2 className='text-center my-3 fs-2'>Top Comments</h2>
+                <div className='h-[2px] w-100 bg-gray-500'></div>
                 <div className='row justify-center'>
-                    {this.state.comments.map((element) => {
+                    {currentComment.map((element) => {
                         return <div className='col-md-4' key={element.id}>
-                            <NewsItems name={element.name} body={element.body} id={element.id} email={element.email} commentId={element.postId} />
+                            <NewsItems name={element.name} body={element ? element.body.slice(0, 100) : ""} id={element.id} email={element.email} commentId={element.postId} />
                         </div>
                     })}
-
-
                 </div>
+                <nav aria-label="..." className='my-3 flex w-100 overflow-scroll gap-1 my-Scroll'>
+                    {pageNumbers.map((number) => (
+                        <ul key={number} class="pagination pagination-sm">
+                            <li class="page-item"><a class="page-link" href="#" id={number} onClick={this.handleClick}>{number}</a></li>
+                        </ul>
+                    ))}
+                </nav>
             </div>
         )
     }
