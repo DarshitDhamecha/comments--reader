@@ -4,6 +4,7 @@ import NavBar from './components/NavBar';
 import News from './components/News';
 import { Route, Routes } from 'react-router';
 import User from './components/User';
+import Post from './components/Post';
 
 export default class App extends Component {
   render() {
@@ -13,6 +14,7 @@ export default class App extends Component {
         <Routes>
           <Route path='/' element={<News />}></Route>
           <Route path='/user' element={<User />}></Route>
+          <Route path='/post' element={<Post />}></Route>
         </Routes>
       </>
     )

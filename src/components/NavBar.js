@@ -21,6 +21,9 @@ export class NavBar extends Component {
                                     <li className="nav-item">
                                         <Link to="/user" className="nav-link active" aria-current="page">Users</Link>
                                     </li>
+                                    <li className="nav-item">
+                                        <Link to="/post" className="nav-link active" aria-current="page">Post</Link>
+                                    </li>
                                 </ul>
                                 <form className="d-flex" role="search">
                                     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
